@@ -1,7 +1,6 @@
 const bodyParser = require("body-parser");
 var express = require("express");
 const axios = require("axios");
-const { data } = require("jquery");
 const path = require('path');
 
 var app = express();
