@@ -6,16 +6,7 @@ const path = require('path');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// const PORT = process.env.PORT || 3000;
-// const indexPath = path.resolve(__dirname, "build", "index.html");
-// // static resources should just be served as they are
-// app.use(
-//   express.static(path.resolve(__dirname,"build"))
-// );
-
-// app.use(
-//   express.static(path.resolve(__dirname,"css"))
-// // );
+const PORT = process.env.PORT || 5000;
 app.get("/", function(req, res) {
   res.send('home page')
 })
@@ -166,9 +157,10 @@ app.post("/view-summary", function(req, res) {
 
 });
 
-// var server = app.listen(8081, function() {
-//   var host = server.address().address;
-//   var port = server.address().port;
 
-//   console.log("Example app listening at http://%s:%s", host, port);
-// });
+var server = app.listen(PORT, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log("Example app listening at http://%s:%s", host, port);
+});
