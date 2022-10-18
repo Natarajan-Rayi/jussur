@@ -5,6 +5,7 @@ const path = require('path');
 
 var app = express();
 app.use(bodyParser.json());
+app.use(__dirname,'./logo.png');
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 5000;
 app.get("/", function(req, res) {
