@@ -13,9 +13,10 @@ app.get("/", function(req, res) {
 })
 
 app.post("/payment-success", function(req, res) {
+  let obj_ = req.params
   if (req.body !== "" || req.body !== undefined) {
-    console.log(req.body);
-    console.log(req.body.command);
+    // console.log(req.body);
+    // console.log(req.body.command);
        let  data = {
             "service_command": req.body.command,
             "merchant_reference": '6311E2A4-C343-ED11-9526-D540254B5C86',
@@ -46,38 +47,7 @@ app.post("/payment-success", function(req, res) {
             "settlement_reference": "",//27
             "phone_number": "9750593005"//28
     }
-    // let data ={
-    //     "service_command": "PURCHASE",
-    //     "merchant_reference": "6311E2A4-C343-ED11-9526-D540254B5C86",
-    //     "fort_id": "169996200007214284",
-    //     "status": "14",
-    //     "payment_option": "VISA",
-    //     "amount": "1440",
-    //     "response_code": "14000",
-    //     "card_number": "****************",
-    //     "signature": "2f47fc704cf3c997b621ce5ad9fd2286eb2e3e36f04ef92d9ebcd706fc7a83c5",
-    //     "merchant_identifier": "7b255eab",
-    //     "access_code": "A5WUkC2PsZn5r4ejrRA0",
-    //     "expiry_date": "****",
-    //     "customer_ip": "**************",
-    //     "language": "en",
-    //     "eci": "ECOMMERCE",
-    //     "command": "",
-    //     "response_message": "Success",
-    //     "authorization_code": "410376",
-    //     "customer_email": "***************",
-    //     "token_name": "e4688d22ca0a4f8589b4e1919f3ba12f",
-    //     "currency": "SAR",
-    //     "card_bin": "123",
-    //     "card_holder_name": "test",
-    //     "remember_me": "",
-    //     "return_url": "http://localhost:3000/payment",
-    //     "customer_name": "****",
-    //     "settlement_reference": "",
-    //     "phone_number": "9089786756"
-    //     }
 
-    console.log(data);
     axios({
       method: "post",
       headers: {
