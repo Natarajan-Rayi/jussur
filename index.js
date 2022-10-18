@@ -16,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(
 //   express.static(path.resolve(__dirname,"css"))
 // // );
-// app.get("/*", function(req, res) {
-//   res.send(__dirname,'./build/index.html')
-// })
+app.get("/", function(req, res) {
+  res.send('home page')
+})
 
 app.post("/payment-success", function(req, res) {
   if (req.body !== "" || req.body !== undefined) {
