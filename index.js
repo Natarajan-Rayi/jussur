@@ -2,8 +2,10 @@ const bodyParser = require("body-parser");
 var express = require("express");
 const axios = require("axios");
 const path = require('path');
+const fs = require('fs')
 
 var app = express();
+const indexPath = path.resolve(__dirname, "summaryPage", "summary.html");
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -89,7 +91,6 @@ app.post("/payment-success", function(req, res) {
       // }
     }).then(function(response) {
       if (response.status === 200) {
-        console.log(response.data);
         res.sendFile('./index.html', {root: __dirname })
       }
     });
@@ -103,6 +104,34 @@ app.post("/view-summary", function(req, res) {
         "Message": "hello",
         "Mobile": "918807401368"
       }
+      var name ='rayi'
+          axios({
+            method: "get",
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM2NTY1NTUsImlzcyI6Imh0dHA6Ly9KdXNzdXIuY29tIiwiYXVkIjoiaHR0cDovL0p1c3N1ci5jb20ifQ.eR9bgd088VDfTEPsDTbmcCipsMrLDV1F-IJ9uRYH7aI",
+            },
+            url:
+              "https://crm.jussuremdad.com/DEVMobAppAPI/api/longterm/GetContractDetails?ContractId=53E82082-EE8E-EC11-951F-BF9B05C28034",
+        }).then(function(response) {
+            console.log(response.data,response.data.CurrentDate)
+            fs.readFile(indexPath, "utf8", (err, htmlData) => {
+
+              htmlData = htmlData
+                  .replaceAll("mnum", response.data.longTermcontractInfo[0].mnum)
+                  .replaceAll('dayname',response.data.longTermcontractInfo[0].dayname)
+                  .replaceAll('HijiriDate',response.data.longTermcontractInfo[0].HijiriDate)
+                  .replaceAll('CurrentDate',response.data.longTermcontractInfo[0].CurrentDate)
+                  .replaceAll('idnum', response.data.longTermcontractInfo[0].idnum)
+                  .replaceAll('xmail',response.data.longTermcontractInfo[0].xmail)
+                  .replaceAll('workingplace',response.data.longTermcontractInfo[0].workingplace)
+                  .replaceAll('postoffice',response.data.longTermcontractInfo[0].postoffice)
+                  .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
+                  .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
+              return res.send(htmlData)
+            })
+
+        })
     //   try {
     //     axios({
     //         method: "post",
@@ -122,7 +151,6 @@ app.post("/view-summary", function(req, res) {
     //         }
     //       });
     //   } catch (error) {
-        res.sendFile('./summaryPage/summary.html',{root: __dirname })
     //   }
 
 
