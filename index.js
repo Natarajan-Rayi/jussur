@@ -4,6 +4,8 @@ const axios = require("axios");
 const path = require('path');
 const fs = require('fs')
 
+var contract_id = ''
+
 var app = express();
 const indexPath = path.resolve(__dirname, "summaryPage", "summary.html");
 app.use(bodyParser.json());
@@ -97,6 +99,13 @@ app.post("/payment-success", function(req, res) {
   }
 });
 
+app.post("/payment-success/*", function(req, res) {
+  let obj_ = req.params
+  console.log(obj_)
+  contract_id=Object.values(obj_)[0]
+  res.sendFile('./index.html', {root: __dirname })
+});
+
 app.post("/view-summary", function(req, res) {
     console.log('sms send function')
     let data = {
@@ -116,7 +125,7 @@ app.post("/view-summary", function(req, res) {
         }).then(function(response) {
             console.log(response.data,response.data.CurrentDate)
             fs.readFile(indexPath, "utf8", (err, htmlData) => {
-
+            if(contract_id==""){
               htmlData = htmlData
                   .replaceAll("mnum", response.data.longTermcontractInfo[0].mnum)
                   .replaceAll('dayname',response.data.longTermcontractInfo[0].dayname)
@@ -128,6 +137,21 @@ app.post("/view-summary", function(req, res) {
                   .replaceAll('postoffice',response.data.longTermcontractInfo[0].postoffice)
                   .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
                   .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
+                  .replaceAll('contract_id',contract_id)
+            }else{
+              htmlData = htmlData
+              .replaceAll("mnum", response.data.longTermcontractInfo[0].mnum)
+              .replaceAll('dayname',response.data.longTermcontractInfo[0].dayname)
+              .replaceAll('HijiriDate',response.data.longTermcontractInfo[0].HijiriDate)
+              .replaceAll('CurrentDate',response.data.longTermcontractInfo[0].CurrentDate)
+              .replaceAll('idnum', response.data.longTermcontractInfo[0].idnum)
+              .replaceAll('xmail',response.data.longTermcontractInfo[0].xmail)
+              .replaceAll('workingplace',response.data.longTermcontractInfo[0].workingplace)
+              .replaceAll('postoffice',response.data.longTermcontractInfo[0].postoffice)
+              .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
+              .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
+              .replaceAll('Contract Id:contract_id','')
+            }
               return res.send(htmlData)
             })
 
