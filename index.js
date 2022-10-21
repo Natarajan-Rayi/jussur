@@ -137,7 +137,7 @@ app.post("/view-summary", function(req, res) {
                   .replaceAll('postoffice',response.data.longTermcontractInfo[0].postoffice)
                   .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
                   .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
-                  .replaceAll('contract_id',contract_id)
+                  .replaceAll('<h3>Contract Id:contract_id</h3>',contract_id)
             }else{
               htmlData = htmlData
               .replaceAll("mnum", response.data.longTermcontractInfo[0].mnum)
@@ -150,7 +150,8 @@ app.post("/view-summary", function(req, res) {
               .replaceAll('postoffice',response.data.longTermcontractInfo[0].postoffice)
               .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
               .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
-              .replaceAll('Contract Id:contract_id','')
+              .replaceAll('contract_id',contract_id)
+
             }
               return res.send(htmlData)
             })
