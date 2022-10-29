@@ -198,8 +198,12 @@ app.get("/view-summary/*", function(req, res) {
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM2NTY1NTUsImlzcyI6Imh0dHA6Ly9KdXNzdXIuY29tIiwiYXVkIjoiaHR0cDovL0p1c3N1ci5jb20ifQ.eR9bgd088VDfTEPsDTbmcCipsMrLDV1F-IJ9uRYH7aI",
           },
           url:
-            "https://crm.jussuremdad.com/DEVMobAppAPI/api/longterm/GetContractDetails?ContractId=53E82082-EE8E-EC11-951F-BF9B05C28034",
+            `https://crm.jussuremdad.com/DEVMobAppAPI/api/longterm/GetContractDetails?ContractId=${contract_id}`,
       }).then(function(response) {
+        console.log(response.data)
+        // if(response.status==400){
+        //   res.send('<p>Contract id not supported')
+        // }else{
           console.log(response.data,response.data.CurrentDate)
           fs.readFile(indexPath, "utf8", (err, htmlData) => {
           if(contract_id==""){
@@ -232,7 +236,7 @@ app.get("/view-summary/*", function(req, res) {
           }
             return res.send(htmlData)
           })
-
+        // }
       })
   //   try {
   //     axios({
