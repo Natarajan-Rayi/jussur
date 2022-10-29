@@ -178,7 +178,7 @@ app.post("/view-summary", function(req, res) {
 
 });
 
-app.get("/view-summary-details/*", function(req, res) {
+app.get("/view-summary/*", function(req, res) {
   let obj_ = req.params
   contract_id=Object.values(obj_)[0]
   console.log('sms send function')
