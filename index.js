@@ -203,6 +203,8 @@ app.get("/view-summary/*", function(req, res) {
         // }else{
           fs.readFile(indexPath, "utf8", (err, htmlData) => {
           if(contract_id==""){
+            try {
+          
             htmlData = htmlData
                 .replaceAll("mnum", response.data.longTermcontractInfo[0].mnum)
                 .replaceAll('dayname',response.data.longTermcontractInfo[0].dayname)
@@ -215,7 +217,12 @@ app.get("/view-summary/*", function(req, res) {
                 .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
                 .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
                 .replaceAll('<h3>Contract Id:contract_id</h3>',contract_id)
+              } catch (error) {
+      res.sendFile('./summaryPage/Error.html', {root: __dirname })
+              
+              }
           }else{
+            try{
             htmlData = htmlData
             .replaceAll("mnum", response.data.longTermcontractInfo[0].mnum)
             .replaceAll('dayname',response.data.longTermcontractInfo[0].dayname)
@@ -228,6 +235,10 @@ app.get("/view-summary/*", function(req, res) {
             .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
             .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
             .replaceAll('contract_id',contract_id)
+          } catch (error) {
+      res.sendFile('./summaryPage/Error.html', {root: __dirname })
+              
+          }
 
           }
             return res.send(htmlData)
