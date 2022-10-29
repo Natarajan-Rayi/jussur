@@ -188,7 +188,7 @@ app.get("/view-summary/*", function(req, res) {
       "Mobile": "918807401368"
     }
     var name ='rayi'
-    try {
+
         axios({
           method: "get",
           headers: {
@@ -239,9 +239,6 @@ app.get("/view-summary/*", function(req, res) {
       res.sendFile('./summaryPage/Error.html', {root: __dirname })
 
       })         
-    } catch (error) {
-      res.send('contract id not supported')
-    }
   //   try {
   //     axios({
   //         method: "post",
