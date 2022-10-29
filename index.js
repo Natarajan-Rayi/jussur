@@ -2,7 +2,8 @@ const bodyParser = require("body-parser");
 var express = require("express");
 const axios = require("axios");
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
+const { error } = require("console");
 
 var contract_id = ''
 
@@ -19,8 +20,6 @@ app.get("/", function(req, res) {
 app.post("/payment-success", function(req, res) {
   let obj_ = req.params
   if (req.body !== "" || req.body !== undefined) {
-    // console.log(req.body);
-    // console.log(req.body.command);
        let  data = {
             "service_command": req.body.command,
             "merchant_reference": '6311E2A4-C343-ED11-9526-D540254B5C86',
@@ -101,7 +100,6 @@ app.post("/payment-success", function(req, res) {
 
 app.post("/payment-success/*", function(req, res) {
   let obj_ = req.params
-  console.log(obj_)
   contract_id=Object.values(obj_)[0]
   res.sendFile('./index.html', {root: __dirname })
 });
@@ -123,7 +121,6 @@ app.post("/view-summary", function(req, res) {
             url:
               "https://crm.jussuremdad.com/DEVMobAppAPI/api/longterm/GetContractDetails?ContractId=53E82082-EE8E-EC11-951F-BF9B05C28034",
         }).then(function(response) {
-            console.log(response.data,response.data.CurrentDate)
             fs.readFile(indexPath, "utf8", (err, htmlData) => {
             if(contract_id==""){
               htmlData = htmlData
@@ -181,7 +178,7 @@ app.post("/view-summary", function(req, res) {
 
 });
 
-app.get("/view-summary/*", function(req, res) {
+app.get("/view-summary-details/*", function(req, res) {
   let obj_ = req.params
   contract_id=Object.values(obj_)[0]
   console.log('sms send function')
@@ -191,6 +188,7 @@ app.get("/view-summary/*", function(req, res) {
       "Mobile": "918807401368"
     }
     var name ='rayi'
+    try {
         axios({
           method: "get",
           headers: {
@@ -200,11 +198,9 @@ app.get("/view-summary/*", function(req, res) {
           url:
             `https://crm.jussuremdad.com/DEVMobAppAPI/api/longterm/GetContractDetails?ContractId=${contract_id}`,
       }).then(function(response) {
-        console.log(response.data)
         // if(response.status==400){
         //   res.send('<p>Contract id not supported')
         // }else{
-          console.log(response.data,response.data.CurrentDate)
           fs.readFile(indexPath, "utf8", (err, htmlData) => {
           if(contract_id==""){
             htmlData = htmlData
@@ -237,7 +233,15 @@ app.get("/view-summary/*", function(req, res) {
             return res.send(htmlData)
           })
         // }
-      })
+      }) .catch((error)=>{
+        console.log('error')
+      // res.send('contract id not supported')
+      res.sendFile('./summaryPage/Error.html', {root: __dirname })
+
+      })         
+    } catch (error) {
+      res.send('contract id not supported')
+    }
   //   try {
   //     axios({
   //         method: "post",
