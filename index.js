@@ -201,6 +201,7 @@ app.get("/view-summary/*", function(req, res) {
         // if(response.status==400){
         //   res.send('<p>Contract id not supported')
         // }else{
+          console.log(response.data)
           fs.readFile(indexPath, "utf8", (err, htmlData) => {
           if(contract_id==""){
             try {
@@ -235,6 +236,8 @@ app.get("/view-summary/*", function(req, res) {
             .replaceAll('pnum',response.data.longTermcontractInfo[0].pnum)
             .replaceAll('postcod',response.data.longTermcontractInfo[0].postcod)
             .replaceAll('contract_id',contract_id)
+            .replaceAll('custname', response.data.longTermcontractInfo[0].custname)
+            .replaceAll('countname', response.data.longTermcontractInfo[0].countname)
           } catch (error) {
       res.sendFile('./summaryPage/Error.html', {root: __dirname })
               
