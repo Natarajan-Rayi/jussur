@@ -238,6 +238,8 @@ app.get("/view-summary/*", function(req, res) {
             .replaceAll('contract_id',contract_id)
             .replaceAll('custname', response.data.longTermcontractInfo[0].custname)
             .replaceAll('countname', response.data.longTermcontractInfo[0].countname)
+            .replaceAll('السيد/ اسمالعميلعربى', response.data.longTermcontractInfo[0].custname_ar)
+            .replaceAll('اسمبلد', response.data.longTermcontractInfo[0].countname_ar)
           } catch (error) {
       res.sendFile('./summaryPage/Error.html', {root: __dirname })
               
