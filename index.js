@@ -3,8 +3,8 @@ var express = require("express");
 const axios = require("axios");
 const path = require('path');
 const fs = require('fs');
-const { error } = require("console");
-const payment_token = require("apple-pay-token-decrypt")
+// const { error } = require("console");
+// const payment_token = require("apple-pay-token-decrypt")
 
 var contract_id = ''
 
@@ -290,23 +290,23 @@ app.get("/view-summary/*", function(req, res) {
 
 });
 
-app.post("/token-decrypt", function(req, res){
-  let token_get = req.body
-  // console.log(obj_)
-//   let token_get=Object.values(obj_)[0]
-//   console.log(token)
+// app.post("/token-decrypt", function(req, res){
+//   let token_get = req.body
+//   // console.log(obj_)
+// //   let token_get=Object.values(obj_)[0]
+// //   console.log(token)
 
-  const token = new payment_token(token_get)
-const decryptedToken = token.decrypt(publicCert, privateKey)
-decryptedToken.then( ret => {
-    console.log(ret)
-    res.send(ret)
-    // return ret
-}).catch( err => {
-    console.error(err)
-    return err
-})
-})
+//   const token = new payment_token(token_get)
+// const decryptedToken = token.decrypt(publicCert, privateKey)
+// decryptedToken.then( ret => {
+//     console.log(ret)
+//     res.send(ret)
+//     // return ret
+// }).catch( err => {
+//     console.error(err)
+//     return err
+// })
+// })
 
 var server = app.listen(PORT, function() {
   var host = server.address().address;
