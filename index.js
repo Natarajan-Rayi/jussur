@@ -191,7 +191,8 @@ app.post("/view-summary", function(req, res) {
 
 app.get("/view-summary/*", function(req, res) {
   let obj_ = req.params
-  contract_id=Object.values(obj_)[0]
+  contract_id=Object.values(obj_)[0].split('/')[0]
+  console.log(obj_,contract_id);
   console.log('sms send function')
   let data = {
       "SMSID": "",
@@ -204,7 +205,7 @@ app.get("/view-summary/*", function(req, res) {
           method: "get",
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM2NTY1NTUsImlzcyI6Imh0dHA6Ly9KdXNzdXIuY29tIiwiYXVkIjoiaHR0cDovL0p1c3N1ci5jb20ifQ.eR9bgd088VDfTEPsDTbmcCipsMrLDV1F-IJ9uRYH7aI",
+              `Bearer ${Object.values(obj_)[0].split('/')[1]}`,
           },
           url:
             `https://crm.jussuremdad.com/DEVMobAppAPI/api/longterm/GetContractDetails?ContractId=${contract_id}`,
